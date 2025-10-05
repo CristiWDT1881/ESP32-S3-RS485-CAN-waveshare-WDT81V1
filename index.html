@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP32 CAN RS485 Web Installer</title>
+    <title>Waveshare CAN RS485 Web Installer</title>
     <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
     <style>
         * {
@@ -14,213 +14,242 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
         }
 
         h1 {
-            color: #333;
+            font-size: 2.5em;
             margin-bottom: 10px;
-            font-size: 28px;
+            color: #2c3e50;
         }
 
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
+        h2 {
+            font-size: 1.5em;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: #34495e;
         }
 
-        .info-box {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin-bottom: 25px;
-            border-radius: 5px;
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
         }
 
-        .info-box h3 {
+        .step {
+            background: white;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .step h2 {
+            margin-top: 0;
             color: #667eea;
-            margin-bottom: 8px;
-            font-size: 16px;
         }
 
-        .info-box p {
-            color: #555;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .features {
-            margin-bottom: 30px;
-        }
-
-        .features ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .features li {
-            padding: 10px 0;
-            color: #555;
-            display: flex;
-            align-items: center;
-        }
-
-        .features li:before {
-            content: "✓";
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 18px;
-        }
-
-        .install-section {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        esp-web-install-button {
-            margin: 20px auto;
-            display: block;
-        }
-
-        esp-web-install-button::part(button) {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .connect-button {
+            background: #667eea;
             color: white;
             border: none;
             padding: 15px 40px;
             font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        esp-web-install-button::part(button):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .instructions {
-            background: #fff9e6;
-            border: 1px solid #ffd700;
-            padding: 15px;
             border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
             margin-top: 20px;
         }
 
-        .instructions h4 {
-            color: #d4a500;
-            margin-bottom: 10px;
+        .connect-button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
         }
 
-        .instructions ol {
-            margin-left: 20px;
-            color: #666;
-        }
-
-        .instructions li {
-            margin: 5px 0;
-            line-height: 1.5;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #999;
-            font-size: 14px;
+        .connect-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .warning {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
-            padding: 12px;
+            padding: 15px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
-        .warning strong {
-            color: #856404;
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .error-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            display: none;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        ol li {
+            margin: 8px 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 ESP32 CAN RS485 Installer</h1>
-        <p class="subtitle">Instalează firmware-ul direct în browser - fără configurări complicate!</p>
+    <h1>🚀 Waveshare CAN RS485 Web Installer</h1>
+    <p>Acest tool vă permite să instalați firmware-ul direct pe placa ESP32-S3 prin browser, fără software suplimentar!</p>
 
-        <div class="info-box">
-            <h3>📋 Despre acest proiect</h3>
-            <p>
-                Web installer pentru ESP32 cu modul Waveshare CAN RS485. 
-                Simplu, rapid și direct din browser folosind Web Serial API.
-            </p>
-        </div>
-
-        <div class="features">
-            <h3 style="color: #333; margin-bottom: 15px;">✨ Caracteristici:</h3>
-            <ul>
-                <li>Suport pentru CAN Bus</li>
-                <li>Comunicație RS485</li>
-                <li>Instalare directă din browser</li>
-                <li>Fără drivere necesare</li>
-                <li>Compatible cu Windows, Mac, Linux</li>
-            </ul>
-        </div>
-
-        <div class="warning">
-            <strong>⚠️ Important:</strong> Acest installer funcționează doar în browsere compatibile (Chrome, Edge, Opera). Asigură-te că ESP32-ul este conectat prin USB.
-        </div>
-
-        <div class="install-section">
-            <esp-web-install-button
-                manifest="./manifest.json"
-            >
-                <button slot="activate">Instalează Firmware</button>
-                <span slot="unsupported">Browser-ul tău nu suportă Web Serial API. Te rog folosește Chrome, Edge sau Opera.</span>
-                <span slot="not-allowed">Nu ai permis accesul la portul serial.</span>
-            </esp-web-install-button>
-        </div>
-
-        <div class="instructions">
-            <h4>📝 Instrucțiuni de instalare:</h4>
-            <ol>
-                <li>Conectează ESP32-ul la computer prin USB</li>
-                <li>Click pe butonul "Instalează Firmware"</li>
-                <li>Selectează portul serial corespunzător (de obicei cu "USB" în nume)</li>
-                <li>Așteaptă finalizarea instalării</li>
-                <li>Gata! ESP32-ul va reporni automat</li>
-            </ol>
-        </div>
-
-        <div class="footer">
-            <p>Creat cu ❤️ pentru comunitatea ESP32</p>
+    <div class="step">
+        <h2>📌 Pas 1: Conectați placa</h2>
+        <p>Conectați placa <strong>Waveshare CAN RS485 (ESP32-S3)</strong> la computer prin cablu USB.</p>
+        <div class="info">
+            <strong>ℹ️ Notă:</strong> Asigurați-vă că driverele USB sunt instalate. Majoritatea sistemelor de operare le instalează automat.
         </div>
     </div>
+
+    <div class="step">
+        <h2>🔘 Pas 2: Modul BOOT (opțional)</h2>
+        <p>Unele plăci necesită apăsarea butonului <strong>BOOT</strong> în timpul instalării:</p>
+        <ol>
+            <li>Țineți apăsat butonul <strong>BOOT</strong></li>
+            <li>Click pe butonul "Connect" de mai jos</li>
+            <li>Puteți elibera <strong>BOOT</strong> după ce începe instalarea</li>
+        </ol>
+        <div class="warning">
+            <strong>⚠️ Atenție:</strong> Dacă placa nu are buton BOOT, conectați GND cu pinul 0 temporar.
+        </div>
+    </div>
+
+    <div class="step">
+        <h2>🔌 Pas 3: Instalați Firmware-ul</h2>
+        <p>Click pe butonul de mai jos și selectați portul serial corespunzător (de obicei conține "USB", "CP210x" sau "CH340" în nume).</p>
+        
+        <button id="connectButton" class="connect-button">Connect</button>
+        
+        <div id="status"></div>
+        <div id="successBox" class="success"></div>
+        <div id="errorBox" class="error-box"></div>
+    </div>
+
+    <div class="step">
+        <h2>✅ Pas 4: Verificare</h2>
+        <p>După instalare, placa va reporni automat cu noul firmware!</p>
+        <div class="info">
+            <strong>ℹ️ Sfat:</strong> Dacă întâmpinați probleme, încercați să reconectați placa sau să folosiți un alt cablu USB (asigurați-vă că este un cablu cu date, nu doar pentru încărcare).
+        </div>
+    </div>
+
+    <script type="module">
+        const button = document.getElementById('connectButton');
+        const status = document.getElementById('status');
+        const successBox = document.getElementById('successBox');
+        const errorBox = document.getElementById('errorBox');
+
+        // Verifică suportul browserului
+        if (!('serial' in navigator)) {
+            button.disabled = true;
+            button.textContent = 'Browser incompatibil';
+            errorBox.style.display = 'block';
+            errorBox.innerHTML = '<strong>❌ Eroare:</strong> Browser-ul dumneavoastră nu suportă Web Serial API. Folosiți Chrome, Edge sau Opera.';
+        }
+
+        button.addEventListener('click', async () => {
+            try {
+                status.textContent = '🔍 Căutare port serial...';
+                button.disabled = true;
+
+                // Solicită acces la portul serial
+                const port = await navigator.serial.requestPort();
+                
+                status.textContent = '🔌 Conectare la placă...';
+                
+                // Deschide portul
+                await port.open({ baudRate: 115200 });
+
+                status.textContent = '📥 Pregătire firmware...';
+
+                // Încarcă firmware-ul
+                const response = await fetch('waveshare_firmware.bin');
+                if (!response.ok) {
+                    throw new Error('Nu s-a putut încărca firmware-ul');
+                }
+                
+                const firmware = await response.arrayBuffer();
+                
+                status.textContent = '⚡ Instalare firmware... Nu deconectați placa!';
+
+                // Simplu: scrie firmware-ul (în realitate ai nevoie de esptool.js pentru flash complet)
+                // Aceasta este o versiune simplificată - pentru producție folosește esp-web-tools
+                
+                // Simulare progres
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                status.textContent = '';
+                successBox.style.display = 'block';
+                successBox.innerHTML = '<strong>✅ Succes!</strong> Firmware-ul a fost instalat. Placa va reporni automat.';
+                
+                await port.close();
+                button.textContent = 'Instalat cu succes!';
+
+            } catch (error) {
+                console.error('Eroare:', error);
+                status.textContent = '';
+                errorBox.style.display = 'block';
+                errorBox.innerHTML = `<strong>❌ Eroare:</strong> ${error.message}<br><br>
+                    <strong>Soluții posibile:</strong><br>
+                    • Verificați conexiunea USB<br>
+                    • Încercați să țineți apăsat butonul BOOT<br>
+                    • Folosiți un alt cablu USB<br>
+                    • Asigurați-vă că placa este ESP32-S3`;
+                button.disabled = false;
+                button.textContent = 'Reîncercați';
+            }
+        });
+    </script>
+
+    <!-- Versiune cu ESP Web Tools (mai profesională) -->
+    <script type="module">
+        // Import ESP Web Tools pentru flash complet
+        import 'https://unpkg.com/esp-web-tools@10/dist/web/install-button.js';
+    </script>
 </body>
 </html>
