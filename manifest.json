@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "firmware.bin",
+          "path": "waveshare_firmware.bin",
           "offset": 0
         }
       ]
