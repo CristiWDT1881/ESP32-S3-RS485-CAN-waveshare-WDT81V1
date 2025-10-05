@@ -1,1 +1,226 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 CAN RS485 Web Installer</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .info-box p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .features {
+            margin-bottom: 30px;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            padding: 10px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+
+        .features li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .install-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        esp-web-install-button {
+            margin: 20px auto;
+            display: block;
+        }
+
+        esp-web-install-button::part(button) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        esp-web-install-button::part(button):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .instructions {
+            background: #fff9e6;
+            border: 1px solid #ffd700;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .instructions h4 {
+            color: #d4a500;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #666;
+        }
+
+        .instructions li {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 ESP32 CAN RS485 Installer</h1>
+        <p class="subtitle">Instalează firmware-ul direct în browser - fără configurări complicate!</p>
+
+        <div class="info-box">
+            <h3>📋 Despre acest proiect</h3>
+            <p>
+                Web installer pentru ESP32 cu modul Waveshare CAN RS485. 
+                Simplu, rapid și direct din browser folosind Web Serial API.
+            </p>
+        </div>
+
+        <div class="features">
+            <h3 style="color: #333; margin-bottom: 15px;">✨ Caracteristici:</h3>
+            <ul>
+                <li>Suport pentru CAN Bus</li>
+                <li>Comunicație RS485</li>
+                <li>Instalare directă din browser</li>
+                <li>Fără drivere necesare</li>
+                <li>Compatible cu Windows, Mac, Linux</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Important:</strong> Acest installer funcționează doar în browsere compatibile (Chrome, Edge, Opera). Asigură-te că ESP32-ul este conectat prin USB.
+        </div>
+
+        <div class="install-section">
+            <esp-web-install-button
+                manifest="./manifest.json"
+            >
+                <button slot="activate">Instalează Firmware</button>
+                <span slot="unsupported">Browser-ul tău nu suportă Web Serial API. Te rog folosește Chrome, Edge sau Opera.</span>
+                <span slot="not-allowed">Nu ai permis accesul la portul serial.</span>
+            </esp-web-install-button>
+        </div>
+
+        <div class="instructions">
+            <h4>📝 Instrucțiuni de instalare:</h4>
+            <ol>
+                <li>Conectează ESP32-ul la computer prin USB</li>
+                <li>Click pe butonul "Instalează Firmware"</li>
+                <li>Selectează portul serial corespunzător (de obicei cu "USB" în nume)</li>
+                <li>Așteaptă finalizarea instalării</li>
+                <li>Gata! ESP32-ul va reporni automat</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p>Creat cu ❤️ pentru comunitatea ESP32</p>
+        </div>
+    </div>
+</body>
+</html>
