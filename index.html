@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waveshare CAN RS485 Web Installer</title>
+    <title>ESP32-S3 Web Installer</title>
     <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
     <style>
         * {
@@ -13,140 +13,101 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #1a5f3f;
             min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-images {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .header-images img {
+            max-width: 180px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-center {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-center img {
+            max-width: 200px;
+            height: auto;
         }
 
         .container {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 3px solid #1a5f3f;
-        }
-
-        .logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 50%, #FFD700 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            box-shadow: 0 5px 20px rgba(26, 95, 63, 0.4);
+            max-width: 700px;
+            width: 100%;
         }
 
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #5B9BD5;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            margin-top: 30px;
-            margin-bottom: 15px;
             color: #FFD700;
-            font-weight: 700;
+            font-size: 2.8em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        p {
-            margin-bottom: 15px;
-            font-size: 1.05em;
-        }
-
-        .step {
-            background: linear-gradient(to right, #f8f9fa 0%, #ffffff 100%);
+        .install-section {
+            background: #B3D9F2;
+            border-radius: 15px;
             padding: 25px;
-            margin: 25px 0;
-            border-radius: 10px;
-            border-left: 5px solid #1a5f3f;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
 
-        .step h2 {
-            margin-top: 0;
+        .install-section.first-box {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 30px;
         }
 
-        .warning {
-            background: #fff9e6;
-            border-left: 5px solid #FFD700;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
+        .install-content {
+            flex: 1;
         }
 
-        .warning strong {
-            color: #FFD700;
-            font-weight: 700;
+        .signature-img {
+            width: 130px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .info {
-            background: #e3f2fd;
-            border-left: 5px solid #5B9BD5;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .info strong {
-            color: #5B9BD5;
-            font-weight: 700;
-        }
-
-        ol {
-            margin-left: 25px;
-            margin-top: 10px;
-        }
-
-        ol li {
-            margin: 8px 0;
-        }
-
-        ul {
-            margin-left: 20px;
-        }
-
-        ul li {
-            margin: 8px 0;
-        }
-
-        code {
-            background: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
+        .install-section h2 {
             color: #1a5f3f;
-            font-weight: 600;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        strong {
-            color: #5B9BD5;
-            font-weight: 700;
+        .install-section p {
+            color: #000;
+            font-size: 1.3em;
+            font-weight: 500;
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .install-section strong {
+            color: #FFD700;
+            font-weight: bold;
         }
 
         esp-web-install-button {
@@ -155,187 +116,246 @@
         }
 
         esp-web-install-button::part(button) {
-            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
+            background: #dc3545;
             color: white;
             border: none;
-            padding: 18px 45px;
-            font-size: 20px;
-            border-radius: 10px;
+            padding: 25px 70px;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(26, 95, 63, 0.4);
-            font-family: inherit;
-            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+            width: 100%;
         }
 
         esp-web-install-button::part(button):hover {
-            background: linear-gradient(135deg, #2d8659 0%, #1a5f3f 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(26, 95, 63, 0.6);
+            animation: blinkColors 0.6s infinite;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.7);
         }
 
-        esp-web-install-button[install-unsupported]::part(button) {
-            background: #dc3545;
+        @keyframes blinkColors {
+            0% { background: #dc3545; }
+            50% { background: #5B9BD5; }
+            100% { background: #dc3545; }
         }
 
-        .install-unsupported {
-            color: #dc3545;
-            font-weight: 700;
-            margin-top: 10px;
+        .progress-info {
+            background: #B3D9F2;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
         }
 
-        .tech-info {
-            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
-            color: white;
+        .progress-info p {
+            color: #000;
+            font-size: 1.2em;
+            margin: 8px 0;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 30px;
+            background: #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 15px;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .links-section {
+            background: #B3D9F2;
+            border-radius: 15px;
             padding: 25px;
-            border-radius: 10px;
             margin-top: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
 
-        .tech-info h2 {
-            color: #FFD700;
-            margin-top: 0;
+        .links-section h3 {
+            color: #1a5f3f;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .tech-info p {
-            color: white;
+        .links-section p {
+            padding: 10px;
+            border-radius: 8px;
             margin: 10px 0;
         }
 
-        .tech-info strong {
+        .links-section strong {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .links-section a {
+            color: #000;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .links-section a:hover {
             color: #FFD700;
+            text-decoration: underline;
         }
 
-        .progress-list {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid #5B9BD5;
+        .radio-section {
+            background: #B3D9F2;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
 
-        .progress-list li {
-            margin: 12px 0;
-            padding-left: 10px;
-        }
-
-        .progress-list strong {
+        .radio-section h3 {
             color: #1a5f3f;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #1a5f3f;
-            color: #666;
+        .radio-links {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .radio-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .radio-link:hover {
+            transform: scale(1.1);
+        }
+
+        .radio-link img {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .radio-link span {
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .footer-image {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .footer-image img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header-images {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .install-section p {
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="header-images">
+        <img src="./palatiasi.png" alt="Palatul Culturii">
+        <img src="./logo.png" alt="Logo">
+    </div>
+
     <div class="container">
-        <div class="header">
-            <div class="logo">
-                🐕☀️
+        <h1>ESP32-S3 Web Installer</h1>
+
+        <div class="install-section first-box">
+            <div class="install-content">
+                <h2>Connect & Write</h2>
+                <p><strong>1.</strong> Connect Waveshare ESP32-S3 via USB</p>
+                <p><strong>2.</strong> Click button below</p>
+                <p><strong>3.</strong> Select <strong>"ERASE DEVICE"</strong></p>
+                <p><strong>4.</strong> Wait for completion</p>
             </div>
-            <h1>Waveshare ESP32-S3 Web Installer</h1>
-            <p class="subtitle">Instalare firmware prin browser - simplu și rapid!</p>
+            <img src="./semnatura.png" alt="Signature" class="signature-img">
         </div>
 
-        <div class="step">
-            <h2>📌 Pas 1: Conectați placa</h2>
-            <p>Conectați placa <strong>Waveshare ESP32-S3 CAN RS485</strong> la computer prin cablu USB.</p>
-            <div class="info">
-                <strong>ℹ️ Notă:</strong> Asigurați-vă că driverele USB sunt instalate. Majoritatea sistemelor de operare le instalează automat.
-            </div>
-        </div>
+        <div class="install-section">
+            <div class="install-content">
+                <esp-web-install-button manifest="./manifest.json">
+                    <button slot="activate">HAPPY WRITE AND INSTALL</button>
+                    <span slot="unsupported" style="color: #FFD700; font-weight: bold;">
+                        ❌ Use Chrome, Edge or Opera
+                    </span>
+                </esp-web-install-button>
 
-        <div class="step">
-            <h2>🔘 Pas 2: Modul BOOT (dacă este necesar)</h2>
-            <p>Unele plăci necesită apăsarea butonului <strong>BOOT</strong> în timpul instalării:</p>
-            <ol>
-                <li>Țineți apăsat butonul <strong>BOOT</strong></li>
-                <li>Click pe butonul <strong>"Instalează Firmware"</strong> de mai jos</li>
-                <li>Selectați portul serial din lista</li>
-                <li>Puteți elibera <strong>BOOT</strong> după ce începe ștergerea memoriei</li>
-            </ol>
-            <div class="warning">
-                <strong>⚠️ Atenție:</strong> Dacă instalarea eșuează, încercați să țineți apăsat BOOT din nou.
-            </div>
-        </div>
-
-        <div class="step">
-            <h2>🔌 Pas 3: Instalați Firmware-ul</h2>
-            <p>Click pe butonul de mai jos și selectați portul serial (de obicei conține <strong>"USB"</strong>, <strong>"CP210x"</strong> sau <strong>"CH340"</strong> în nume).</p>
-            
-            <p style="font-size: 1.1em; margin-top: 20px;"><strong>⚡ Important: Selectați "ERASE DEVICE" când vi se solicită pentru instalare curată!</strong></p>
-            
-            <esp-web-install-button manifest="./manifest.json">
-                <button slot="activate">🚀 Instalează Firmware</button>
-                <span slot="unsupported" class="install-unsupported">
-                    ❌ Browser-ul dumneavoastră nu suportă Web Serial API.<br>
-                    Folosiți Chrome, Edge sau Opera (versiuni recente).
-                </span>
-                <span slot="not-allowed" class="install-unsupported">
-                    ❌ Nu ați permis accesul la portul serial.<br>
-                    Reîncărcați pagina și acordați permisiunea.
-                </span>
-            </esp-web-install-button>
-
-            <div class="info">
-                <strong>📊 Progres instalare:</strong>
-                <div class="progress-list">
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li>🔵 <strong>Preparing installation...</strong> - Se pregătește procesul</li>
-                        <li>🟡 <strong>Erasing device...</strong> - Șterge memoria (10-30 secunde)</li>
-                        <li>🟢 <strong>Writing at 0x...</strong> - Scrie firmware-ul (1-3 minute)</li>
-                        <li>✅ <strong>Installation complete!</strong> - Instalare finalizată!</li>
-                    </ul>
+                <div class="progress-info">
+                    <p><strong>Progress:</strong></p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <span id="progress-text">0%</span>
+                        </div>
+                    </div>
+                    <p>👑 Preparing → 👑 Erasing → 👑 Writing → 👑 Complete!</p>
+                    <p><strong>Time: 2-4 minutes</strong></p>
                 </div>
             </div>
         </div>
 
-        <div class="step">
-            <h2>⏱️ Timp estimat de instalare</h2>
-            <p><strong>Total: aproximativ 2-4 minute</strong></p>
-            <ul>
-                <li><strong>Ștergere memorie:</strong> 10-30 secunde</li>
-                <li><strong>Scriere firmware:</strong> 1-3 minute (depinde de dimensiunea fișierului)</li>
-                <li><strong>Verificare:</strong> câteva secunde</li>
-            </ul>
-            <div class="warning">
-                <strong>⚠️ CRITIC:</strong> NU deconectați placa în timpul instalării! Așteptați mesajul <strong>"Installation complete!"</strong>
+        <div class="links-section">
+            <h3>📚 Resources</h3>
+            <p><strong>Thanks:</strong> <a href="https://github.com/dalathegreat/Battery-Emulator/tree/v9.0.0" target="_blank">Dalathegreat</a></p>
+            <p><strong>Board:</strong> <a href="https://www.waveshare.com/wiki/ESP32-S3-RS485-CAN" target="_blank">Waveshare ESP32-S3-RS485-CAN</a></p>
+        </div>
+
+        <div class="radio-section">
+            <h3>📻 Radio Live</h3>
+            <div class="radio-links">
+                <a href="https://www.radioromaniacultural.ro/live/" target="_blank" class="radio-link">
+                    <img src="./logocultural.svg" alt="Radio România Cultural">
+                    <span>Cultural</span>
+                </a>
+                <a href="http://player.radioiasi.ro/live-radio-iasi.html" target="_blank" class="radio-link">
+                    <img src="./logoriasi.svg" alt="Radio Iași">
+                    <span>Radio Iași</span>
+                </a>
             </div>
-        </div>
-
-        <div class="step">
-            <h2>✅ Pas 4: Verificare și testare</h2>
-            <p>După instalare, placa va reporni automat cu noul firmware!</p>
-            <div class="info">
-                <strong>🔧 Depanare - Dacă întâmpinați probleme:</strong>
-                <ul style="margin-top: 10px;">
-                    <li>Verificați că folosiți un cablu USB <strong>cu date</strong> (nu doar pentru încărcare)</li>
-                    <li>Încercați un <strong>alt port USB</strong> pe computer</li>
-                    <li>Țineți apăsat <strong>BOOT</strong> în timpul conectării</li>
-                    <li>Verificați că placa este cu adevărat <strong>ESP32-S3</strong></li>
-                    <li>Încercați alt browser (<strong>Chrome</strong> sau <strong>Edge</strong> recomandat)</li>
-                    <li>Restartați computerul și încercați din nou</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="tech-info">
-            <h2>📝 Informații tehnice</h2>
-            <p><strong>Placă:</strong> Waveshare ESP32-S3-RS485-CAN</p>
-            <p><strong>Procesor:</strong> ESP32-S3 (Dual Core, până la 240MHz)</p>
-            <p><strong>Flash:</strong> 16MB</p>
-            <p><strong>PSRAM:</strong> 8MB OPI</p>
-            <p><strong>Interfețe:</strong> CAN Bus + RS485</p>
-            <p><strong>USB:</strong> Native USB CDC (Serial over USB)</p>
-        </div>
-
-        <div class="footer">
-            <p>🐕 Creat cu pasiune pentru energia verde ☀️</p>
-            <p style="font-size: 0.9em; margin-top: 10px; color: #999;">Waveshare ESP32-S3 Web Installer © 2025</p>
         </div>
     </div>
 </body>
