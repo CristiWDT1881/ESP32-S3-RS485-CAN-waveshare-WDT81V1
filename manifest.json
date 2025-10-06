@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "home_assistant_domain": "",
   "new_install_prompt_erase": true,
-  "new_install_improv_wait_time": 0,
   "builds": [
     {
       "chipFamily": "ESP32-S3",
-      "improv": false,
       "parts": [
         {
-          "path": "waveshare_firmware.bin",
+          "path": "https://github.com/CristiWDT1881/ESP32-S3-RS485-CAN-waveshare-WDT81V1/raw/main/bootloader.bin",
           "offset": 0
+        },
+        {
+          "path": "https://github.com/CristiWDT1881/ESP32-S3-RS485-CAN-waveshare-WDT81V1/raw/main/partitions.bin",
+          "offset": 32768
+        },
+        {
+          "path": "https://github.com/CristiWDT1881/ESP32-S3-RS485-CAN-waveshare-WDT81V1/raw/main/waveshare_app.bin",
+          "offset": 65536
         }
       ]
     }
